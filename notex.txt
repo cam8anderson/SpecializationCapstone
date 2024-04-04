@@ -1,0 +1,30 @@
+3 things for my project:
+    
+    Login:
+        user can register with a name email and password
+        user can login
+        users can have different roles that apply to their rank
+
+    Create Teams:
+        user can create teams
+        user can create team members
+        user can assign other users to teams
+
+    Projects:
+        users can create projects
+        users can assign projects to teams
+        users can complete projects
+
+    History:
+        users can see the history of what has happened in postgres such as project complete or if new team members have been added
+        users can see who put in the changes
+
+what to work on:
+    everything
+
+start on:
+    getting the users name to show up under their team
+
+worked on last:
+    role authentication
+

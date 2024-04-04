@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block body %}
+<h3>Teams</h3>
+<ul>
+  {% for team in teams %}
+  <li>{{ team.team_name }}</li>
+  <ul>
+    {% for user in team_users[team.team_id] %}
+    <li>{{ user.name }}</li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</ul>
+<!--
+
+  <h3>Users without teams</h3>
+  <ul>
+    {% for user in users %}
+    <li>
+      {{ user.name }} - {{ user.role }}
+      <form action="/assign_team" method="POST">
+        <select name="team_id">
+          {% for team in teams %}
+          <option value="{{ team.team_id }}">{{ team.team_name }}</option>
+          {% endfor %}
+        </select>
+        <input type="hidden" name="user_id" value="{{ user.user_id }}" />
+        <input type="submit" value="Assign Team" />
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+-->
+{% endblock %}
