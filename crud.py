@@ -76,6 +76,25 @@ def join_teamuser():
 #
     #return team, user
 
+def get_projects():
+    return Project.query.all()
+
+def get_project_by_id(project_id):
+    return Project.query.get(project_id)
+
+def get_teams_with_projects():
+    
+    teams = Team.query.all()
+    teams_with_projects = []
+
+    for team in teams:
+
+        team_info = {
+            'team': team,
+            'projects': team.projects
+        }
+        teams_with_projects.append(team_info)
+    return teams_with_projects
 
 if __name__ == '__main__':
 

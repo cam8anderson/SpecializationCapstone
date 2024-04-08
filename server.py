@@ -66,16 +66,20 @@ def teams():
         flash('Please login')
         return redirect('/')
 
-    if user_role not in ['Admin', 'Team_lead']:
-        flash('Access Denied')
-        return redirect('/')
 
     teams = crud.get_teams()
     users = crud.get_users()
-
     team_users = {team.team_id: crud.get_active_users_by_team(team.team_id) for team in teams}
+    supervisors = {team.supervisor_id for team in teams}
 
-    return render_template('teams.html',users=users, teams=teams, team_users=team_users)
+    
+    users_without_teams = [user for user in users if user.user_id not in team_users and user.user_id not in supervisors]
+
+    print('here')
+    print(user_role)
+
+    return render_template('teams.html', teams=teams, users=users_without_teams, team_users=team_users)
+
 
 @app.route('/assign_team', methods=['GET', 'POST'])
 def assign_team():
@@ -98,9 +102,87 @@ def assign_team():
 
     teams = crud.get_teams()
     team_users = {team.team_id: crud.get_active_users_by_team(team.team_id) for team in teams}
+    users = crud.get_users()
 
-    return render_template('teams.html', teams=teams, team_users=team_users)
+    return render_template('teams.html', teams=teams, team_users=team_users, users=users)
+
+@app.route('/create_team', methods=['POST'])
+def create_team():
+    supervisor_id = request.form.get('supervisor_id')
+    team_name = request.form.get('team_name')
+
+    if supervisor_id is None:
+        flash('Please login')
+        return redirect('/')
+
+    team = crud.create_team(supervisor_id, team_name)
+
+    db.session.add(team)
+    db.session.commit()
+
+    flash(f"Team '{team_name}' created successfully!")
+
+    return redirect('/teams')
+
+@app.route('/projects', methods=['GET', 'POST'])
+def projects():
+    if request.method == 'POST':
+        team_id = request.form.get('team_id')
+        description = request.form.get('description')
+        status = request.form.get('status')
+
+        project = crud.create_project(team_id, description, status)
+
+        db.session.add(project)
+        db.session.commit()
+
+        flash(f"Project '{description}' created successfully!")
+
+        return redirect('/projects')
+
+    teams_with_projects = crud.get_teams_with_projects()
+    incomplete_teams_with_projects = [team_info for team_info in teams_with_projects if any(project.status != 'complete' for project in team_info['projects'])]
+    completed_teams_with_projects = [team_info for team_info in teams_with_projects if all(project.status == 'complete' for project in team_info['projects'])]
+    teams = crud.get_teams()
+
+    return render_template('projects.html', teams_with_projects=teams_with_projects, incomplete_teams_with_projects=incomplete_teams_with_projects, completed_teams_with_projects=completed_teams_with_projects, teams=teams)
+
+
+@app.route('/update_project_status', methods=['POST'])
+def update_project_status():
+    if request.method == 'POST':
+        project_id = request.form.get('project_id')
+        status = request.form.get('status')
+
+        project = crud.get_project_by_id(project_id)
+
+        if project:
+            project.status = status
+            db.session.commit()
+            flash(f"Project status updated successfully!")
+        else:
+            flash("Project not found")
+
+        return redirect('/projects')
+
+@app.route('/create_project', methods=['POST'])
+def create_project():
+    team_id = request.form.get('team_id')
+    description = request.form.get('description')
+    status = request.form.get('status')
+
+    if not team_id or not description or not status:
+        flash('Please fill out all fields')
+        return redirect('/projects')
+
+    project = crud.create_project(team_id, description, status)
+
+    db.session.add(project)
+    db.session.commit()
+
+    flash('Project created successfully!')
+    return redirect('/projects')
 
 if __name__ == '__main__':
         connect_to_db(app)
-        app.run()
+        app.run(debug=True)
