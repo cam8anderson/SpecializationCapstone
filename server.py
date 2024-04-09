@@ -141,12 +141,14 @@ def projects():
         return redirect('/projects')
 
     teams_with_projects = crud.get_teams_with_projects()
-    incomplete_teams_with_projects = [team_info for team_info in teams_with_projects if any(project.status != 'complete' for project in team_info['projects'])]
-    completed_teams_with_projects = [team_info for team_info in teams_with_projects if all(project.status == 'complete' for project in team_info['projects'])]
+
+    for team_info in teams_with_projects:
+        team_info['incomplete_projects'] = [project for project in team_info['projects'] if project.status != 'complete']
+        team_info['complete_projects'] = [project for project in team_info['projects'] if project.status == 'complete']
+
     teams = crud.get_teams()
 
-    return render_template('projects.html', teams_with_projects=teams_with_projects, incomplete_teams_with_projects=incomplete_teams_with_projects, completed_teams_with_projects=completed_teams_with_projects, teams=teams)
-
+    return render_template('projects.html', teams_with_projects=teams_with_projects, teams=teams)
 
 @app.route('/update_project_status', methods=['POST'])
 def update_project_status():
@@ -182,6 +184,22 @@ def create_project():
 
     flash('Project created successfully!')
     return redirect('/projects')
+
+@app.route('/history')
+def history():
+
+    users = User.query.all()
+    teams = Team.query.all()
+    projects = Project.query.all()
+    team_users = TeamUser.query.all()
+
+    all_records = users + teams + projects + team_users
+
+    sorted_records = sorted(all_records, key=lambda x: x.created_at if x.created_at else x.updated_at)
+
+    current_user_name = session.get('user_name')
+
+    return render_template('history.html', sorted_records=sorted_records, current_user_name=current_user_name)
 
 if __name__ == '__main__':
         connect_to_db(app)

@@ -83,18 +83,21 @@ def get_project_by_id(project_id):
     return Project.query.get(project_id)
 
 def get_teams_with_projects():
-    
     teams = Team.query.all()
     teams_with_projects = []
 
     for team in teams:
-
+        projects = Project.query.filter_by(team_id=team.team_id).all()
         team_info = {
             'team': team,
-            'projects': team.projects
+            'projects': projects
         }
         teams_with_projects.append(team_info)
+
     return teams_with_projects
+
+def get_team_user():
+    return TeamUser.query.all()
 
 if __name__ == '__main__':
 

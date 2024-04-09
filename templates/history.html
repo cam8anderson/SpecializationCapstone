@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block body %}
+<h1>History</h1>
+<ul>
+  {% for record in sorted_records %}
+  <li>
+    {% if record.__tablename__ == 'users' %} User: {{ record.name }} - Role: {{
+    record.role }} {% elif record.__tablename__ == 'teams' %} Team: {{
+    record.team_name }} - Supervisor: {{ record.supervisor.name }} {% elif
+    record.__tablename__ == 'projects' %} Project: {{ record.description }} -
+    Status: {{ record.status }} {% elif record.__tablename__ == 'team_user' %}
+    Team User: {{ record.user.name }} - Team: {{ record.team.team_name }} {%
+    else %} Unknown record type {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

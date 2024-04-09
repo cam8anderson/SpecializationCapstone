@@ -16,15 +16,14 @@
     done--    users can complete projects
 
     History:
-        users can see the history of what has happened in postgres such as project complete or if new team members have been added
-        users can see who put in the changes
+    done--    users can see the history of what has happened in postgres such as project complete or if new team members have been added
 
 what to work on:
     projects and history
 
 start on:
-    history
+    css
 
 worked on last:
-    projects
+    history
 
