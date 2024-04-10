@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width" />
     <title>{% block title %}{% endblock %}</title>
     {% block head %}{% endblock %}
+    <link rel="stylesheet" href="static/base.css" />
   </head>
   <body>
-    <h1>Navigation</h1>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/user">Users</a></li>
-      <li><a href="/teams">Teams</a></li>
-      <li><a href="/projects">Projects</a></li>
-      <li><a href="/history">History</a></li>
-    </ul>
+    <h1>Team Builder</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/user">Users</a>
+      <a href="/teams">Teams</a>
+      <a href="/projects">Projects</a>
+      <a href="/history">History</a>
+    </nav>
     {% for msg in get_flashed_messages() %}
     <p class="flash-msg">{{ msg }}</p>
     {% endfor %} {% block body %} {% block content %}{% endblock %} {% endblock
