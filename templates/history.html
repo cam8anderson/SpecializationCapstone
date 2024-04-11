@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block body %}
 <h1>History</h1>
-<ul>
+<ol class="history">
   {% for record in sorted_records %}
   <li>
     {% if record.__tablename__ == 'users' %} User: {{ record.name }} - Role: {{
@@ -12,5 +12,5 @@
     else %} Unknown record type {% endif %}
   </li>
   {% endfor %}
-</ul>
+</ol>
 {% endblock %}

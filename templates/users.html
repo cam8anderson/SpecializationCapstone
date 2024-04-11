@@ -1,8 +1,11 @@
 {% extends 'base.html' %} {% block body %}
-<h3>Users</h3>
-<ol>
+<ol class="users-list">
+  <h3>Users</h3>
   {% for user in users %}
-  <li>{{ user.name }} - {{ user.role }}</li>
+  <li>
+    <strong>Name:</strong> {{ user.name }}<br />
+    <strong>Role:</strong> {{ user.role }}
+  </li>
   {% endfor %}
 </ol>
 {% endblock %}

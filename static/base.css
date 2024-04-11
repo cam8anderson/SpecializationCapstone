@@ -129,3 +129,270 @@ input[type="submit"] {
   background-color: #31493c;
   color: #eef0eb;
 }
+
+/* history page */
+
+.users-list {
+  width: fit-content;
+  list-style-type: none;
+  padding: 10px;
+  margin: 0;
+  border-radius: 5px;
+  background-color: #eef0eb;
+}
+
+.users-list li {
+  margin-bottom: 10px;
+  background-color: #f4f9e9;
+  border-color: #31493c;
+}
+
+.history {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+/* teams page */
+
+.teams-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.create-team,
+.team-users {
+  width: 400px;
+  padding: 20px;
+  background-color: #eef0eb;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.create-team form,
+.team-users ul {
+  list-style-type: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.create-team input[type="text"],
+.create-team select,
+.create-team input[type="submit"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #31493c;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.create-team input[type="submit"] {
+  background-color: #31493c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* users without teams*/
+
+.team-users ul li {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #eef0eb;
+}
+
+.team-users ul li form {
+  margin-top: 10px;
+}
+
+.team-users ul li form select,
+.team-users ul li form input[type="submit"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 2px solid #31493c;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.team-users ul li form input[type="submit"] {
+  background-color: #31493c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.teamusers-lists {
+  border: none;
+  padding: 10px 0;
+}
+
+.teamuser-list form select,
+.teamuser-list form input[type="submit"] {
+  margin-top: 10px;
+}
+
+/* teams list */
+
+.teams-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.team {
+  width: 200px;
+  padding: 20px;
+  background-color: #eef0eb;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.team h3 {
+  margin-top: 0;
+}
+
+.users-in-teams {
+  padding-left: 20px;
+}
+
+.users-in-teams li {
+  margin-bottom: 10px;
+}
+
+/* projects page */
+
+/* projects page */
+.teams-with-projects {
+  width: 400px;
+  padding: 20px;
+  background-color: #eef0eb;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.teams-with-projects h3 {
+  margin-top: 0;
+}
+
+.teams-with-projects ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.teams-with-projects li {
+  margin-bottom: 10px;
+}
+
+.teams-with-projects form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.teams-with-projects label {
+  margin-bottom: 10px;
+}
+
+.teams-with-projects input[type="submit"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #31493c;
+  color: white;
+  cursor: pointer;
+}
+
+.teams-with-projects form select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #31493c;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.teams-with-projects select:focus {
+  outline: none;
+}
+
+/* create project */
+.create-project {
+  width: 400px;
+  padding: 20px;
+  background-color: #eef0eb;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.create-project h3 {
+  margin-top: 0;
+}
+
+.create-project form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create-project label {
+  margin-bottom: 5px;
+}
+
+.create-project input[type="text"],
+.create-project select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 2px solid #31493c;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.create-project input[type="submit"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #31493c;
+  color: white;
+  cursor: pointer;
+}
+
+/* this is the complete and incomplete projects */
+.incomplete-projects,
+.completed-projects {
+  width: 400px;
+  padding: 20px;
+  background-color: #eef0eb;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin: 0 auto;
+}
+
+.incomplete-projects h3,
+.completed-projects h3 {
+  margin-top: 0;
+}
+
+.incomplete-projects ul,
+.completed-projects ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.incomplete-projects li,
+.completed-projects li {
+  margin-bottom: 10px;
+}

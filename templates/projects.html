@@ -1,74 +1,88 @@
 {% extends 'base.html' %}
 {% block body %}
 {% if 'Admin' in session.user_role or 'Team_lead' in session.user_role %}
-    <h3>Teams with Projects</h3>
-    <ul>
-        {% for team_info in teams_with_projects %}
-            <li>{{ team_info['team'].team_name }}</li>
-            <ul>
-                {% for project in team_info['incomplete_projects'] %}
-                    <li>
-                        {{ project.description }} - Status: {{ project.status }}
-                        <form action="/update_project_status" method="POST">
-                            <input type="hidden" name="project_id" value="{{ project.project_id }}">
-                            <select name="status">
-                                <option value="incomplete" {% if project.status == 'incomplete' %} selected {% endif %}>Incomplete</option>
-                                <option value="pending" {% if project.status == 'pending' %} selected {% endif %}>Pending</option>
-                                <option value="complete" {% if project.status == 'complete' %} selected {% endif %}>Complete</option>
-                            </select>
-                            <input type="submit" value="Update Status">
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </ul>
-    <h3>Create New Project</h3>
-    <form action="/create_project" method="POST">
-        <label for="team_id">Select Team:</label>
-        <select name="team_id" id="team_id">
-            {% for team in teams %}
-                <option value="{{ team.team_id }}">{{ team.team_name }}</option>
-            {% endfor %}
-        </select><br><br>
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description" required><br><br>
-        <label for="status">Status:</label>
-        <select name="status" id="status">
-            <option value="incomplete">Incomplete</option>
-            <option value="pending">Pending</option>
-            <option value="complete">Complete</option>
-        </select><br><br>
-        <input type="submit" value="Create Project">
-    </form>
+    <div class="projects-container">
+        <div class="flex-container">
+            <div class="teams-with-projects">
+                <h3>Teams with Projects</h3>
+                <ul>
+                    {% for team_info in teams_with_projects %}
+                        <li>{{ team_info['team'].team_name }}</li>
+                        <ul>
+                            {% for project in team_info['incomplete_projects'] %}
+                                <li>
+                                    {{ project.description }} - Status: {{ project.status }}
+                                    <form action="/update_project_status" method="POST">
+                                        <input type="hidden" name="project_id" value="{{ project.project_id }}">
+                                        <select name="status">
+                                            <option value="incomplete" {% if project.status == 'incomplete' %} selected {% endif %}>Incomplete</option>
+                                            <option value="pending" {% if project.status == 'pending' %} selected {% endif %}>Pending</option>
+                                            <option value="complete" {% if project.status == 'complete' %} selected {% endif %}>Complete</option>
+                                        </select>
+                                        <input type="submit" value="Update Status">
+                                    </form>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="create-project">
+                <h3>Create New Project</h3>
+                <form action="/create_project" method="POST">
+                    <label for="team_id">Select Team:</label>
+                    <select name="team_id" id="team_id">
+                        {% for team in teams %}
+                            <option value="{{ team.team_id }}">{{ team.team_name }}</option>
+                        {% endfor %}
+                    </select><br><br>
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" required><br><br>
+                    <label for="status">Status:</label>
+                    <select name="status" id="status">
+                        <option value="incomplete">Incomplete</option>
+                        <option value="pending">Pending</option>
+                        <option value="complete">Complete</option>
+                    </select><br><br>
+                    <input type="submit" value="Create Project">
+                </form>
+            </div>
+        </div>
+    </div>
 {% endif %}
 
-<h3>Incomplete Projects</h3>
-<ul>
-    {% for team_info in teams_with_projects %}
-        <li>{{ team_info['team'].team_name }}</li>
+<div class="flex-container">
+    <div class="incomplete-projects">
+        <h3>Incomplete Projects</h3>
         <ul>
-            {% for project in team_info['incomplete_projects'] %}
-                <li>
-                    {{ project.description }} - Status: {{ project.status }}
-                </li>
+            {% for team_info in teams_with_projects %}
+                <li>{{ team_info['team'].team_name }}</li>
+                <ul>
+                    {% for project in team_info['incomplete_projects'] %}
+                        <li>
+                            {{ project.description }} - Status: {{ project.status }}
+                        </li>
+                    {% endfor %}
+                </ul>
             {% endfor %}
         </ul>
-    {% endfor %}
-</ul>
+    </div>
 
-<h3>Completed Projects</h3>
-<ul>
-    {% for team_info in teams_with_projects %}
-        <li>{{ team_info['team'].team_name }}</li>
+    <div class="completed-projects">
+        <h3>Completed Projects</h3>
         <ul>
-            {% for project in team_info['complete_projects'] %}
-                <li>
-                    {{ project.description }} - Status: {{ project.status }}
-                </li>
+            {% for team_info in teams_with_projects %}
+                <li>{{ team_info['team'].team_name }}</li>
+                <ul>
+                    {% for project in team_info['complete_projects'] %}
+                        <li>
+                            {{ project.description }} - Status: {{ project.status }}
+                        </li>
+                    {% endfor %}
+                </ul>
             {% endfor %}
         </ul>
-    {% endfor %}
-</ul>
+    </div>
+</div>
 
 {% endblock %}
