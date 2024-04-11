@@ -22,7 +22,7 @@ what to work on:
     projects and history
 
 start on:
-    css
+    the rest of the css based on the homepage
 
 worked on last:
     history

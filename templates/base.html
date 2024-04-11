@@ -3,18 +3,26 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&family=Tilt+Neon&display=swap"
+      rel="stylesheet"
+    />
     <title>{% block title %}{% endblock %}</title>
     {% block head %}{% endblock %}
     <link rel="stylesheet" href="static/base.css" />
   </head>
   <body>
-    <h1>Team Builder</h1>
     <nav>
-      <a href="/">Home</a>
-      <a href="/user">Users</a>
-      <a href="/teams">Teams</a>
-      <a href="/projects">Projects</a>
-      <a href="/history">History</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/user">Users</a>
+        <a href="/teams">Teams</a>
+        <a href="/projects">Projects</a>
+        <a href="/history">History</a>
+      </div>
+      <h1>Team Builder</h1>
     </nav>
     {% for msg in get_flashed_messages() %}
     <p class="flash-msg">{{ msg }}</p>
