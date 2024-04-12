@@ -99,6 +99,12 @@ def get_teams_with_projects():
 def get_team_user():
     return TeamUser.query.all()
 
+def get_users_on_teams():
+    team_users = TeamUser.query.filter_by(is_active=True).all()
+    users_in_teams = [team_user.user_id for team_user in team_users]
+
+    return users_in_teams
+
 if __name__ == '__main__':
 
     from server import app

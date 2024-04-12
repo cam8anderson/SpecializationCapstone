@@ -27,3 +27,5 @@ start on:
 worked on last:
     history
 
+implementation detail:
+    explain key parts

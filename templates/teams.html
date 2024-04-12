@@ -21,7 +21,7 @@
   <div class="team-users">
     <h3>Users without teams</h3>
     <ul>
-      {% for user in users %} {% if user.role not in ['Admin', 'Team_lead'] %}
+      {% for user in users %} {% if user.user_id not in team_users_ids %}
       <li class="teamuser-list">
         <strong>Name:</strong> {{ user.name }}<br />
         <strong>Role:</strong> {{ user.role }}

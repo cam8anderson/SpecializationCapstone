@@ -66,19 +66,22 @@ def teams():
         flash('Please login')
         return redirect('/')
 
-
     teams = crud.get_teams()
-    users = crud.get_users()
     team_users = {team.team_id: crud.get_active_users_by_team(team.team_id) for team in teams}
     supervisors = {team.supervisor_id for team in teams}
 
-    
-    users_without_teams = [user for user in users if user.user_id not in team_users and user.user_id not in supervisors]
+    all_team_users = [user_id for users_list in team_users.values() for user_id in users_list]
+    supervisors = {team.supervisor_id for team in teams}
 
-    print('here')
-    print(user_role)
+    users_without_teams = [user for user in crud.get_users() if (user.user_id not in all_team_users and user.user_id not in supervisors) or (user.role == 'Admin' and user.user_id in supervisors)]
 
-    return render_template('teams.html', teams=teams, users=users_without_teams, team_users=team_users)
+    team_users_ids = crud.get_users_on_teams()
+
+    users_without_teams = list(users_without_teams)
+
+    return render_template('teams.html', teams=teams, users=users_without_teams, team_users=team_users, team_users_ids=team_users_ids)
+
+
 
 
 @app.route('/assign_team', methods=['GET', 'POST'])
@@ -91,10 +94,13 @@ def assign_team():
         team = Team.query.get(team_id)
 
         if user and team:
-            if crud.assign_user_to_team(user_id, team_id):
-                flash(f"User {user.name} has been assigned to team {team.team_name}")
+            if user_id not in crud.get_users_on_teams():
+                if crud.assign_user_to_team(user_id, team_id):
+                    flash(f"User {user.name} has been assigned to team {team.team_name}")
+                else:
+                    flash(f"Failed to assign user {user.name} to team {team.team_name}")
             else:
-                flash(f"Failed to assign user {user.name} to team {team.team_name}")
+                flash(f"User {user.name} is already assigned to a team")
         else:
             flash("User or team not found")
 
@@ -103,8 +109,13 @@ def assign_team():
     teams = crud.get_teams()
     team_users = {team.team_id: crud.get_active_users_by_team(team.team_id) for team in teams}
     users = crud.get_users()
+    team_users_ids = crud.get_users_on_teams() 
+    print(f"Team user ids :", team_users_ids)
 
-    return render_template('teams.html', teams=teams, team_users=team_users, users=users)
+    return render_template('teams.html', teams=teams, team_users=team_users, users=users, team_users_ids=team_users_ids)
+
+
+
 
 @app.route('/create_team', methods=['POST'])
 def create_team():
@@ -203,4 +214,4 @@ def history():
 
 if __name__ == '__main__':
         connect_to_db(app)
-        app.run()
+        app.run(debug=True)
