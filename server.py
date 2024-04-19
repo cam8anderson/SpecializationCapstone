@@ -137,6 +137,13 @@ def create_team():
 
 @app.route('/projects', methods=['GET', 'POST'])
 def projects():
+
+    user_role = session.get('user_role')
+
+    if user_role is None:
+        flash('Please login')
+        return redirect('/')
+
     if request.method == 'POST':
         team_id = request.form.get('team_id')
         description = request.form.get('description')
